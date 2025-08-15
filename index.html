@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Context-Aware Chatbot Using n8n, Pinecone and Google Drive</title>
+  <meta name="description" content="Readable web version of the project: n8n RAG chatbot with Pinecone and Google Drive.">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Context-Aware Chatbot Using n8n, Pinecone and Google Drive</h1>
+    <p class="tagline">Readable web version — built from the project document.</p>
+    <nav class="nav">
+      <a href="#introduction">Introduction</a>
+      <a href="#problem-statement">Problem</a>
+      <a href="#approach-methodology">Method</a>
+      <a href="#implementation-steps">Implementation</a>
+      <a href="#results">Results</a>
+      <a href="#future">Future</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section id="introduction">
+      <h2>1. Introduction</h2>
+      <p>This project turns PDFs in Google Drive into context-aware answers using an n8n RAG pipeline powered by Pinecone and OpenAI.</p>
+    </section>
+
+    <section id="problem-statement">
+      <h2>2. Problem Statement</h2>
+      <p>Manual PDF searches are slow, miss context, and do not scale. We need automation that retrieves accurate, contextual answers instantly.</p>
+    </section>
+
+    <section id="approach-methodology">
+      <h2>3. Approach &amp; Methodology</h2>
+      <p>We use Retrieval-Augmented Generation: retrieve relevant chunks from a vector database, augment the prompt, and generate a precise response.</p>
+    </section>
+
+    <section id="tools">
+      <h2>4. Tools, Frameworks, and Data Used</h2>
+      <p>n8n, Google Drive nodes, PDF parser, Recursive Character Text Splitter, OpenAI embeddings, Pinecone, and OpenAI Chat model.</p>
+    </section>
+
+    <section id="implementation-steps">
+      <h2>5. Implementation Steps</h2>
+      <article class="card">
+        <h3>Workflow A — Bulk Ingestion</h3>
+        <p>Search and download all PDFs → split text → generate embeddings → store in Pinecone.</p>
+      </article>
+      <article class="card">
+        <h3>Workflow B — Incremental Ingestion</h3>
+        <p>Trigger on new file uploads → download → split → embed → append to Pinecone (no reprocessing of old files).</p>
+      </article>
+      <article class="card">
+        <h3>Query Workflow</h3>
+        <p>Receive question → retrieve top-k chunks from Pinecone → feed context to the OpenAI chat model → return answer.</p>
+      </article>
+    </section>
+
+    <section id="results">
+      <h2>6. Results and Outcomes</h2>
+      <p>Hands-free processing, faster answers, higher accuracy, and a scalable knowledge base.</p>
+    </section>
+
+    <section id="lessons">
+      <h2>7. Lessons Learned</h2>
+      <p>Chunk sizing, overlap, and good metadata dramatically improve retrieval quality. Dual ingestion keeps data fresh.</p>
+    </section>
+
+    <section id="future">
+      <h2>8. Future Improvements / Next Steps</h2>
+      <ul>
+        <li>Support Word/Excel and connect to databases.</li>
+        <li>Reprocess on file updates to keep vectors fresh.</li>
+        <li>Ship the chatbot as a web app for easy access.</li>
+        <li>Refine retrieval accuracy and performance.</li>
+      </ul>
+    </section>
+
+    <section id="conclusion">
+      <h2>9. Conclusion</h2>
+      <p>The
+ 
+n8n
+ 
+RAG
+ 
+Workflow
+ 
+Chatbot
+ 
+transforms
+ 
+stored
+ 
+documents
+ 
+into
+ 
+an
+ 
+always-updated,
+ 
+searchable
+ 
+knowledge
+ 
+base.
+ 
+By
+ 
+automating
+ 
+ingestion
+ 
+and
+ 
+delivering
+ 
+context-rich
+ 
+answers
+ 
+in
+ 
+seconds,
+ 
+it
+ 
+saves
+ 
+time,
+ 
+boosts
+ 
+accuracy,
+ 
+and
+ 
+makes
+ 
+information
+ 
+instantly
+ 
+accessible
+ 
+across
+ 
+teams.</p>
+    </section>
+
+    <section id="references">
+      <h2>10. References</h2>
+      <p>●
+ 
+OpenAI
+ 
+API
+ 
+Documentation:
+ 
+https://platform.openai.com/docs
+ 
+●
+ 
+Pinecone
+ 
+Documentation:
+ 
+https://docs.pinecone.io
+ 
+●
+ 
+n8n
+ 
+Documentation:
+ 
+https://docs.n8n.io</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> n8n RAG Workflow Chatbot</p>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
