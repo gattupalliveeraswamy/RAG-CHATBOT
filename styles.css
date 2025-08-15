@@ -1,0 +1,352 @@
+
+/* ==========================================================================
+   Site Styles for: Context-Aware Chatbot Using n8n, Pinecone & Google Drive
+   File: styles.css
+   Author: ChatGPT
+   Notes: Designed to pair with the provided index.html structure.
+   ========================================================================== */
+
+/* ------------------------------
+   CSS Variables (Design Tokens)
+   ------------------------------ */
+:root {
+  --bg: #0b1224;
+  --bg-elev: #0e1730;
+  --card: #0f1833;
+  --text: #e8eefb;
+  --muted: #a8b3cf;
+  --link: #82aaff;
+  --link-hover: #a8c8ff;
+  --border: #1f2a44;
+  --accent: #7c9cff;
+  --accent-2: #6fe6d5;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-2xl: 28px;
+  --container: 1100px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 40px;
+  --space-10: 56px;
+  --easing: cubic-bezier(.22,1,.36,1);
+}
+
+/* Light mode (optional). Remove if you prefer dark only. */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f7f9fe;
+    --bg-elev: #ffffff;
+    --card: #ffffff;
+    --text: #0b1224;
+    --muted: #55607a;
+    --link: #2c62ff;
+    --link-hover: #2048c9;
+    --border: #e6ebf5;
+    --accent: #2c62ff;
+    --accent-2: #0fb8a8;
+    --shadow: 0 8px 24px rgba(25, 40, 72, 0.08);
+  }
+}
+
+/* ------------------------------
+   CSS Reset (minimal, modern)
+   ------------------------------ */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  line-height: 1.65;
+  color: var(--text);
+  background: radial-gradient(1200px 600px at 20% -10%, rgba(124,156,255,.12), transparent 40%),
+              radial-gradient(900px 500px at 110% 10%, rgba(111,230,213,.18), transparent 45%),
+              var(--bg);
+}
+
+/* Improve text rendering */
+body, input, button {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus ring */
+:where(a, button, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* ------------------------------
+   Typography
+   ------------------------------ */
+h1, h2, h3 {
+  line-height: 1.2;
+  margin: 0 0 var(--space-4);
+  letter-spacing: .2px;
+}
+
+h1 {
+  font-size: clamp(2rem, 3vw + 1rem, 3rem);
+  font-weight: 800;
+}
+
+h2 {
+  font-size: clamp(1.25rem, 1.1rem + 1.2vw, 2rem);
+  font-weight: 750;
+}
+
+h3 {
+  font-size: clamp(1.05rem, 1rem + .8vw, 1.25rem);
+  font-weight: 700;
+}
+
+p { margin: 0 0 var(--space-4); }
+
+.kicker { color: var(--muted); font-weight: 600; }
+
+.muted { color: var(--muted); }
+
+/* Links */
+a {
+  color: var(--link);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+
+a:hover { color: var(--link-hover); }
+
+/* Lists */
+ul.list, ol.list {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.list li { margin: 6px 0; }
+
+/* Code */
+code, pre, kbd, samp {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.95em;
+}
+
+pre {
+  background: var(--bg-elev);
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: auto;
+}
+
+/* ------------------------------
+   Layout
+   ------------------------------ */
+.container {
+  width: min(100% - 2rem, var(--container));
+  margin-inline: auto;
+}
+
+.site-header {
+  position: relative;
+  padding: var(--space-9) var(--space-4) var(--space-6);
+  text-align: center;
+  background:
+    radial-gradient(1200px 680px at 50% -20%, rgba(124,156,255,.18), transparent 55%),
+    radial-gradient(800px 420px at -15% 10%, rgba(111,230,213,.22), transparent 60%);
+}
+
+.tagline {
+  color: var(--muted);
+  margin-top: var(--space-2);
+  font-size: clamp(1rem, .6rem + .9vw, 1.25rem);
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: var(--space-5);
+}
+
+.nav a {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0));
+  color: var(--text);
+  text-decoration: none;
+  transition: transform .15s var(--easing), border-color .2s var(--easing);
+}
+
+.nav a:hover {
+  border-color: var(--border);
+  transform: translateY(-1px);
+}
+
+/* Cards & Sections */
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-2xl);
+  padding: clamp(18px, 2.6vw, 28px);
+  box-shadow: var(--shadow);
+  margin: var(--space-6) 0;
+}
+
+.card h2 { margin-top: 2px; }
+
+/* Footer */
+.site-footer {
+  padding: var(--space-8) var(--space-4);
+  color: var(--muted);
+  text-align: center;
+  border-top: 1px solid var(--border);
+  margin-top: var(--space-10);
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+}
+
+/* ------------------------------
+   Components
+   ------------------------------ */
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  background: linear-gradient(180deg, var(--card), var(--bg-elev));
+  color: var(--text);
+  box-shadow: var(--shadow);
+  transition: transform .15s var(--easing), box-shadow .15s var(--easing), border-color .2s;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 34px rgba(0,0,0,.38);
+  border-color: color-mix(in oklab, var(--border) 60%, var(--accent));
+}
+
+/* Figures & Media */
+figure { margin: 0; }
+figure img {
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  display: block;
+  box-shadow: var(--shadow);
+}
+
+figcaption {
+  color: var(--muted);
+  font-size: .95rem;
+  margin-top: 6px;
+}
+
+/* Grids */
+.grid {
+  display: grid;
+  gap: 16px;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 820px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Reference list */
+.ref-list a { word-break: break-word; }
+
+/* Tables (if any) */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-4) 0;
+  font-size: .98rem;
+}
+
+th, td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  text-align: left;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: .2px;
+}
+
+/* Blockquotes */
+blockquote {
+  margin: var(--space-4) 0;
+  padding: var(--space-4) var(--space-5);
+  border-left: 4px solid var(--accent);
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+  border-radius: 8px;
+  color: var(--text);
+}
+
+/* Images */
+img { max-width: 100%; height: auto; }
+
+/* ------------------------------
+   Utilities
+   ------------------------------ */
+.hidden { display: none !important; }
+.center { text-align: center; }
+.right { text-align: right; }
+.max-w-prose { max-width: 70ch; }
+.rounded { border-radius: var(--radius-lg); }
+.shadow { box-shadow: var(--shadow); }
+.border { border: 1px solid var(--border); }
+.mt-0 { margin-top: 0 !important; }
+.mt-2 { margin-top: var(--space-2) !important; }
+.mt-4 { margin-top: var(--space-4) !important; }
+.mt-6 { margin-top: var(--space-6) !important; }
+.mb-0 { margin-bottom: 0 !important; }
+.mb-2 { margin-bottom: var(--space-2) !important; }
+.mb-4 { margin-bottom: var(--space-4) !important; }
+.mb-6 { margin-bottom: var(--space-6) !important; }
+
+/* ------------------------------
+   Print (keeps it simple)
+   ------------------------------ */
+@media print {
+  body { background: #fff; color: #000; }
+  .site-header, .nav, .hero-actions, .site-footer { display: none !important; }
+  .card {
+    box-shadow: none;
+    border: 1px solid #ddd;
+    break-inside: avoid;
+  }
+}
