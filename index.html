@@ -42,7 +42,7 @@
     </nav>
 
     <div class="hero-actions" style="margin-top:14px">
-      <a class="btn" href="rag-doc.pdf" download>⬇ Download the PDF</a>
+      <a class="btn" href="RAG%20Doc.pdf" download>⬇ Download the PDF</a>
       <!-- Optional: add a "Contact" or "Demo" link -->
     </div>
   </header>
@@ -105,18 +105,11 @@
         <li>Store embeddings in a RAG vector database.</li>
         <li>Use an AI Agent to retrieve context and answer questions.</li>
       </ol>
-
-      <!-- IMAGE PLACEHOLDER: add your exported diagram(s) from the PDF into /images and update src -->
-      <div class="grid grid-2" aria-label="Workflow images">
-        <figure>
-          <img src="images/workflow-overview.png" alt="RAG workflow overview" />
-          <figcaption>Overall RAG architecture combining n8n, embeddings, and Pinecone.</figcaption>
-        </figure>
-        <figure>
-          <img src="images/agent-retrieval.png" alt="Agent retrieval path" />
-          <figcaption>Agent-driven retrieval: query → search → augment → generate.</figcaption>
-        </figure>
-      </div>
+      <!-- SINGLE IMAGE: overall full workflow picture -->
+      <figure>
+        <img src="images/workflow-overview.png" alt="Full workflow overview diagram" />
+        <figcaption>Overall RAG architecture combining n8n, embeddings, and Pinecone.</figcaption>
+      </figure>
     </section>
 
     <section class="card" id="implementation">
@@ -131,6 +124,11 @@
         <li><strong>Embedding Generation</strong> — Create embeddings via OpenAI.</li>
         <li><strong>Vector Storage</strong> — Save vectors &amp; metadata in Pinecone.</li>
       </ol>
+      <!-- IMAGE: Workflow A -->
+      <figure>
+        <img src="images/bulk-ingestion.png" alt="Workflow A - Bulk ingestion workflow diagram" />
+        <figcaption>Workflow A — Bulk ingestion for existing PDFs.</figcaption>
+      </figure>
 
       <h3>Workflow B – Incremental Ingestion (New Files Only)</h3>
       <ol class="list">
@@ -140,6 +138,11 @@
         <li><strong>Embedding Generation</strong> — Create embeddings for the chunks.</li>
         <li><strong>Vector Storage</strong> — Add embeddings &amp; metadata to Pinecone without reprocessing existing files.</li>
       </ol>
+      <!-- IMAGE: Workflow B -->
+      <figure>
+        <img src="images/incremental-ingestion.png" alt="Workflow B - Incremental ingestion workflow diagram" />
+        <figcaption>Workflow B — Incremental ingestion for new files.</figcaption>
+      </figure>
 
       <h3>Query Workflow</h3>
       <ol class="list">
@@ -149,18 +152,11 @@
         <li><strong>Context Injection</strong> — Feeds results into the AI chat model.</li>
         <li><strong>Response</strong> — Returns an accurate, context-aware answer.</li>
       </ol>
-
-      <!-- IMAGE PLACEHOLDER: per-workflow diagrams -->
-      <div class="grid grid-2">
-        <figure>
-          <img src="images/bulk-ingestion.png" alt="Bulk ingestion workflow diagram" />
-          <figcaption>Workflow A — Bulk ingestion for existing PDFs.</figcaption>
-        </figure>
-        <figure>
-          <img src="images/incremental-ingestion.png" alt="Incremental ingestion workflow diagram" />
-          <figcaption>Workflow B — Incremental ingestion for new files.</figcaption>
-        </figure>
-      </div>
+      <!-- IMAGE: Agent-driven Query Workflow -->
+      <figure>
+        <img src="images/agent-retrieval.png" alt="Agent-driven query workflow diagram" />
+        <figcaption>Agent-driven retrieval: query → search → augment → generate.</figcaption>
+      </figure>
     </section>
 
     <section class="card" id="results">
@@ -200,4 +196,3 @@
   </footer>
 </body>
 </html>
-
