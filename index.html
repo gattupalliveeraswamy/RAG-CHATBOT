@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Context-Aware Chatbot Using n8n, Pinecone & Google Drive</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* small helpers to complement your styles.css */
+    .hero-actions { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    .btn {
+      display:inline-block; padding:10px 14px; border-radius:10px; border:1px solid #243250;
+      text-decoration:none; background:#0f1833; color:#e5e7eb;
+    }
+    .btn:hover { background:#111f3d; }
+    .grid { display:grid; gap:16px; }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    figure { margin:0; }
+    figure img { width:100%; height:auto; border-radius:12px; border:1px solid #1f2a44; display:block; }
+    figcaption { color:#a8b3cf; font-size:0.95rem; margin-top:6px; }
+    .kicker { color:#93a4c4; letter-spacing:.02em; }
+    .list { margin:0; padding-left:1.1rem; }
+    .list li { margin:6px 0; }
+    .muted { color:#a8b3cf; }
+    .ref-list a { word-break: break-all; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <h1>Context-Aware Chatbot Using n8n, Pinecone & Google Drive</h1>
+    <p class="tagline">Agent-powered RAG workflow that extracts from Google Drive PDFs and returns precise, context-aware answers.</p>
+
+    <nav class="nav" aria-label="Sections">
+      <a href="#problem">Problem</a>
+      <a href="#approach">Approach</a>
+      <a href="#tools">Tools</a>
+      <a href="#overview">Workflow Overview</a>
+      <a href="#implementation">Implementation</a>
+      <a href="#results">Results</a>
+      <a href="#future">Future Work</a>
+      <a href="#references">References</a>
+    </nav>
+
+    <div class="hero-actions" style="margin-top:14px">
+      <a class="btn" href="RAG%20Doc.pdf" download>⬇ Download the PDF</a>
+      <!-- Optional: add a "Contact" or "Demo" link -->
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card" id="intro">
+      <p>In today’s AI-driven world, the ability to retrieve accurate, context-rich answers from large collections of documents is a game-changer. This page details an Agent-powered RAG (Retrieval-Augmented Generation) workflow built in <strong>n8n</strong> to extract specific details from Google Drive PDFs and provide precise, context-aware responses—automating repetitive, time-consuming, and error-prone document tasks.</p>
+    </section>
+
+    <section class="card" id="problem">
+      <h2>Problem Statement</h2>
+      <ul class="list">
+        <li>Slow retrieval due to manual file opening and keyword searching.</li>
+        <li>Missed context when using traditional search tools.</li>
+        <li>Inability to scale as document counts increase.</li>
+      </ul>
+      <p class="kicker">The challenge was to build a system that:</p>
+      <ol class="list">
+        <li>Ingests both existing and new PDFs from Google Drive.</li>
+        <li>Extracts their content and stores it in a vector database.</li>
+        <li>Responds to user queries with accurate, context-aware answers.</li>
+      </ol>
+    </section>
+
+    <section class="card" id="approach">
+      <h2>Approach &amp; Methodology</h2>
+      <p>The solution applies <strong>Retrieval-Augmented Generation (RAG)</strong>:</p>
+      <ol class="list">
+        <li><strong>Retrieval</strong> &mdash; Search a vector database for relevant content.</li>
+        <li><strong>Augmentation</strong> &mdash; Feed the retrieved context to an AI model.</li>
+        <li><strong>Generation</strong> &mdash; Produce natural-language answers.</li>
+      </ol>
+      <p>Two interconnected workflows power the system:</p>
+      <ol class="list">
+        <li><strong>Data Ingestion</strong> — Ingest PDFs, extract content, split text, generate embeddings, and store them in a vector database (bulk &amp; incremental).</li>
+        <li><strong>Query Processing</strong> — Accept user queries, retrieve relevant chunks, and generate answers.</li>
+      </ol>
+    </section>
+
+    <section class="card" id="tools">
+      <h2>Tools, Frameworks, and Data Used</h2>
+      <ul class="list">
+        <li>n8n — Automation workflow platform.</li>
+        <li>Google Drive Trigger &amp; Search — Detect and fetch files.</li>
+        <li>PDF Parser — Extract text from PDFs.</li>
+        <li>Recursive Character Text Splitter — Split content into manageable chunks.</li>
+        <li>OpenAI Embeddings API — Create vector embeddings.</li>
+        <li>Pinecone Vector Store — Store and retrieve vectors.</li>
+        <li>OpenAI Chat Model (GPT) — Generate responses with retrieved context.</li>
+        <li>Data Source — PDFs stored in Google Drive.</li>
+      </ul>
+    </section>
+
+    <section class="card" id="overview">
+      <h2>Workflow Overview</h2>
+      <ol class="list">
+        <li>Monitor Google Drive for new or updated PDFs.</li>
+        <li>Extract and process text content.</li>
+        <li>Convert text into vector embeddings for semantic search.</li>
+        <li>Store embeddings in a RAG vector database.</li>
+        <li>Use an AI Agent to retrieve context and answer questions.</li>
+      </ol>
+      <!-- SINGLE IMAGE: overall full workflow picture -->
+      <figure>
+        <img src="images/workflow-overview.png" alt="Full workflow overview diagram" />
+        <figcaption>Overall RAG architecture combining n8n, embeddings, and Pinecone.</figcaption>
+      </figure>
+    </section>
+
+    <section class="card" id="implementation">
+      <h2>Implementation Steps</h2>
+
+      <h3>Workflow A – Bulk Ingestion (All Existing Files)</h3>
+      <ol class="list">
+        <li><strong>Trigger</strong> — Manual or scheduled execution.</li>
+        <li><strong>Search Files &amp; Folders</strong> — Retrieve all PDFs from Google Drive.</li>
+        <li><strong>Download Content</strong> — Fetch each file’s content.</li>
+        <li><strong>Text Splitting</strong> — Split documents into chunks with a Recursive Character Text Splitter.</li>
+        <li><strong>Embedding Generation</strong> — Create embeddings via OpenAI.</li>
+        <li><strong>Vector Storage</strong> — Save vectors &amp; metadata in Pinecone.</li>
+      </ol>
+      <!-- IMAGE: Workflow A -->
+      <figure>
+        <img src="images/bulk-ingestion.png" alt="Workflow A - Bulk ingestion workflow diagram" />
+        <figcaption>Workflow A — Bulk ingestion for existing PDFs.</figcaption>
+      </figure>
+
+      <h3>Workflow B – Incremental Ingestion (New Files Only)</h3>
+      <ol class="list">
+        <li><strong>Trigger</strong> — Google Drive <em>fileCreated</em> event.</li>
+        <li><strong>Download File</strong> — Retrieve the new file’s content.</li>
+        <li><strong>Text Splitting</strong> — Process content into chunks.</li>
+        <li><strong>Embedding Generation</strong> — Create embeddings for the chunks.</li>
+        <li><strong>Vector Storage</strong> — Add embeddings &amp; metadata to Pinecone without reprocessing existing files.</li>
+      </ol>
+      <!-- IMAGE: Workflow B -->
+      <figure>
+        <img src="images/incremental-ingestion.png" alt="Workflow B - Incremental ingestion workflow diagram" />
+        <figcaption>Workflow B — Incremental ingestion for new files.</figcaption>
+      </figure>
+
+      <h3>Query Workflow</h3>
+      <ol class="list">
+        <li><strong>Chat Message Received</strong> — User sends a query.</li>
+        <li><strong>AI Agent</strong> — Processes the query and decides retrieval strategy.</li>
+        <li><strong>Vector Store Tool</strong> — Searches Pinecone for relevant chunks.</li>
+        <li><strong>Context Injection</strong> — Feeds results into the AI chat model.</li>
+        <li><strong>Response</strong> — Returns an accurate, context-aware answer.</li>
+      </ol>
+      <!-- IMAGE: Agent-driven Query Workflow -->
+      <figure>
+        <img src="images/agent-retrieval.png" alt="Agent-driven query workflow diagram" />
+        <figcaption>Agent-driven retrieval: query → search → augment → generate.</figcaption>
+      </figure>
+    </section>
+
+    <section class="card" id="results">
+      <h2>Results and Outcomes</h2>
+      <ul class="list">
+        <li><strong>Automated Processing</strong> — Old and new files handled without manual effort.</li>
+        <li><strong>Fast Query Responses</strong> — Relevant answers delivered in seconds.</li>
+        <li><strong>Improved Accuracy</strong> — Context-aware retrieval ensures better answers.</li>
+        <li><strong>Scalability</strong> — Supports large and growing document sets.</li>
+      </ul>
+    </section>
+
+    <section class="card" id="future">
+      <h2>Future Improvements / Next Steps</h2>
+      <ul class="list">
+        <li>Support more file types (Word, Excel) and database connections.</li>
+        <li>Add triggers for file updates to keep content fresh.</li>
+        <li>Integrate the chatbot into a web app for easier access.</li>
+        <li>Refine retrieval accuracy and embedding performance.</li>
+      </ul>
+    </section>
+
+    <section class="card" id="references">
+      <h2>References</h2>
+      <ul class="list ref-list">
+        <li><a href="https://platform.openai.com/docs">OpenAI API Documentation</a></li>
+        <li><a href="https://docs.pinecone.io">Pinecone Documentation</a></li>
+        <li><a href="https://docs.n8n.io">n8n Documentation</a></li>
+      </ul>
+      <p class="muted">This website’s text was adapted from the original PDF so it can be read on the web. Download the original for the exact print layout.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Context-Aware Chatbot · Built with n8n, OpenAI, and Pinecone</p>
+    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  </footer>
+</body>
+</html>
