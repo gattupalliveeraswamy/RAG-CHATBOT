@@ -1,5 +1,9 @@
 # n8n RAG Workflow Chatbot — GitHub Pages Site
 
+YT link  : https://www.youtube.com/watch?v=Pb6Y-e9LE-g
+You can download the Json file in this repository to get it in your n8n account.
+
+
 This repository hosts a static site (via GitHub Pages) for the n8n RAG Workflow Chatbot project.
 - `index.html` — Landing page with an embedded copy of the project PDF.
 - `assets/styles.css` — Minimal styling.
